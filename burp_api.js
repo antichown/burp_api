@@ -53,8 +53,8 @@ request({
 }
 
 
-var id_list = new Array();
-var issue_db=new Array();
+var id_list = [];
+var issue_db= [];
 
 require('fs').readFileSync('domains.txt', 'utf-8').split(/\r?\n/).forEach(function(line){
     task_id(line,function (response)  {
@@ -68,7 +68,7 @@ if(id_list.length>0) {
     for (var i = 0; i < id_list.length; i++) {
         report(id_list[i],function (response)  {
             if(response.includes("succeeded")) {
-                delete array[i]
+                delete id_list[i]
             }else {
                // console.log(response)
 
