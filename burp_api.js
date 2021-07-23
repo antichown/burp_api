@@ -1,6 +1,4 @@
 const request = require('requestretry');
-var process = require('process');
-
 
 var REST_API="http://127.0.0.1:1337/v0.1/scan";
 
@@ -100,10 +98,6 @@ if(id_list.length>0) {
         
         });
     }
-
-}else {
-
-    process.exit(1)
 
 }
 }, 5000);  
