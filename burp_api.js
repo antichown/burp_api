@@ -1,4 +1,6 @@
 const request = require('requestretry');
+var process = require('process');
+
 
 var REST_API="http://127.0.0.1:1337/v0.1/scan";
 
@@ -58,17 +60,22 @@ var issue_db= [];
 
 require('fs').readFileSync('domains.txt', 'utf-8').split(/\r?\n/).forEach(function(line){
     task_id(line,function (response)  {
-        console.log("TASK ID: "+response.headers.location)
+        console.log("TASK ID: "+response.headers.location+ " --> "+line)
         id_list.push(response.headers.location);
         });
   })
 
 setInterval(function() {  
+
 if(id_list.length>0) {
     for (var i = 0; i < id_list.length; i++) {
         report(id_list[i],function (response)  {
             if(response.includes("succeeded")) {
-                delete id_list[i]
+
+                   // delete id_list[i]
+                   console.log("TASK ID: "+id_list[i]+" succeeded")
+                    id_list.pop(i)
+            
             }else {
                // console.log(response)
 
@@ -76,8 +83,6 @@ if(id_list.length>0) {
 
                 try {
                         var issue_list_json = JSON.parse(response);
-
-                        
                         var issue_list=issue_list_json.issue_events
 
                         if(!issue_db.includes(JSON.stringify(issue_list))) {
