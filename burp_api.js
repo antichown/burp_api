@@ -73,7 +73,6 @@ if(id_list.length>0) {
             if(response.includes("succeeded")) {
 
                    // delete id_list[i]
-                   console.log("TASK ID: "+id_list[i]+" succeeded")
                     id_list.pop(i)
             
             }else {
